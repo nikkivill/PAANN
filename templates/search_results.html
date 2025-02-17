@@ -13,6 +13,7 @@
     <main>
         <section class="search-results">
             <h2>Search Results for "{{ query }}"</h2>
+
             <div class="filter-section">
                 <form action="{{ url_for('search') }}" method="post">
                     <input type="hidden" name="query" value="{{ query }}">
@@ -23,6 +24,19 @@
                     </label>
                     <label>
                         <input type="checkbox" name="Population" value="PJL" {% if 'PJL' in request.form.getlist('Population') %}checked{% endif %}> Punjabi (PJL)
+                    </label>
+                    <p>Apply Phenotype Filters:</p>
+                    <label>
+                        <input type="checkbox" name="phenotype" value="FGadjBMI" {% if 'FGadjBMI' in request.form.getlist('phenotype') %}checked{% endif %}> Fasting Glucose (FGadjBMI)
+                    </label>
+                    <label>
+                        <input type="checkbox" name="phenotype" value="HBA1CadjBMI" {% if 'HBA1CadjBMI' in request.form.getlist('phenotype') %}checked{% endif %}> HbA1C (HBA1CadjBMI)
+                    </label>
+                    <label>
+                        <input type="checkbox" name="phenotype" value="FIadjBMI" {% if 'FIadjBMI' in request.form.getlist('phenotype') %}checked{% endif %}> Fasting Insulin (FIadjBMI)
+                    </label>
+                    <label>
+                        <input type="checkbox" name="phenotype" value="2hrGadjBMI" {% if '2hrGadjBMI' in request.form.getlist('phenotype') %}checked{% endif %}> 2-Hour Glucose (2hrGadjBMI)
                     </label>
                     <button type="submit">Apply Filters</button>
                 </form>
@@ -41,7 +55,6 @@
                                 <th>Gene</th>
                                 <th>Phenotype</th>
                                 <th>P-Value</th>
-                                <th>Ancestry</th>
                                 <th>Population</th>
                             </tr>
                         </thead>
@@ -56,8 +69,7 @@
                                 <td>{{ snp.Mapped_Gene if snp.Mapped_Gene else "N/A" }}</td>
                                 <td>{{ snp.Phenotype if snp.Phenotype else "N/A" }}</td>
                                 <td>{{ snp.P_value if snp.P_value else "N/A" }}</td>
-                                <td>{{ snp.Ancestry if snp.Ancestry else "N/A" }}</td>
-                                <td>{{ snp.Population_ID if snp.Population_ID else "N/A" }}</td>
+                                <td>{{ snp.Population if snp.Population else "N/A" }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
