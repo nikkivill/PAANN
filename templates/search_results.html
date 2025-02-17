@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Search Results - SNP Browser</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='search_style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>PAANN T2D Browser</h1>
+    </header>
+
+    <main>
+        <section class="search-results">
+            <h2>Search Results for "{{ query }}"</h2>
+            <div class="filter-section">
+                <form action="{{ url_for('search') }}" method="post">
+                    <input type="hidden" name="query" value="{{ query }}">
+                    <input type="hidden" name="filter" value="{{ search_type }}">
+                    <p>Apply Population Filters:</p>
+                    <label>
+                        <input type="checkbox" name="Population" value="BEB" {% if 'BEB' in request.form.getlist('Population') %}checked{% endif %}> Bengali (BEB)
+                    </label>
+                    <label>
+                        <input type="checkbox" name="Population" value="PJL" {% if 'PJL' in request.form.getlist('Population') %}checked{% endif %}> Punjabi (PJL)
+                    </label>
+                    <button type="submit">Apply Filters</button>
+                </form>
+            </div>
+            
+            {% if results %}
+                <div class="search-results-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>RSID</th>
+                                <th>Chromosome</th>
+                                <th>Position</th>
+                                <th>Ref</th>
+                                <th>Alt</th>
+                                <th>Gene</th>
+                                <th>Phenotype</th>
+                                <th>P-Value</th>
+                                <th>Ancestry</th>
+                                <th>Population</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for snp in results %}
+                            <tr>
+                                <td>{{ snp.RSID }}</td>
+                                <td>{{ snp.Chromosome }}</td>
+                                <td>{{ snp.Position }}</td>
+                                <td>{{ snp.Reference_Allele }}</td>
+                                <td>{{ snp.Alternate_Allele }}</td>
+                                <td>{{ snp.Mapped_Gene if snp.Mapped_Gene else "N/A" }}</td>
+                                <td>{{ snp.Phenotype if snp.Phenotype else "N/A" }}</td>
+                                <td>{{ snp.P_value if snp.P_value else "N/A" }}</td>
+                                <td>{{ snp.Ancestry if snp.Ancestry else "N/A" }}</td>
+                                <td>{{ snp.Population_ID if snp.Population_ID else "N/A" }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination controls -->
+                <div class="pagination">
+                    {% if page > 1 %}
+                        <a href="{{ url_for('search', page=page-1, query=query, filter=search_type) }}">Previous</a>
+                    {% endif %}
+                    <span>Page {{ page }} of {{ total_pages }}</span>
+                    {% if page < total_pages %}
+                        <a href="{{ url_for('search', page=page+1, query=query, filter=search_type) }}">Next</a>
+                    {% endif %}
+                </div>
+
+            {% else %}
+                <p>No SNPs found matching your query.</p>
+            {% endif %}
+        </section>
+
+        <section class="back-home">
+            <a href="{{ url_for('home') }}">Back to Home</a>
+        </section>
+    </main>
+    <footer>
+        <p>© 2024 PAANN T2D Browser | <a href="{{ url_for('contact') }}">Contact Us</a></p>
+    </footer>
+</body>
+</html>
