@@ -55,10 +55,12 @@ def search():
         query = request.form.get("query")
         search_type = request.form.get("filter")
         populations = request.form.getlist("Population")
+        phenotypes = request.form.getlist("phenotype")
     else: 
         query = request.args.get("query")
         search_type = request.args.get("filter")
         populations = request.args.getlist("Population")
+        phenotypes = request.args.getlist("phenotype")
 
     # gets a page parameter, the current one, and sets how many results per page
     page = request.args.get('page', 1, type=int)
@@ -69,7 +71,7 @@ def search():
     if query and search_type:
 
         search_value = query + "%"
-        total_results, results = execute_query(search_type, search_value, populations, page, per_page)
+        total_results, results = execute_query(search_type, search_value, populations, phenotypes, page, per_page)
         total_pages = math.ceil(total_results / per_page)
         logger.info(f"Results: {results}")
 
@@ -77,7 +79,7 @@ def search():
 
     return render_template("search_results.html", query=None, results=[], search_type=None, page=1, total_pages=1)
 
-def execute_query(search_type, search_value, populations=None, page=1, per_page=20):
+def execute_query(search_type, search_value, populations=None, phenotypes=None, page=1, per_page=20):
     # Dictionary to map search types to SQL, LIKE used for partial matches so rs... gives return rs1234, rs5678, etc.
     query_map = {
         "snp_id": "sc.RSID LIKE :search_value",  # Use LIKE for partial matches
@@ -102,22 +104,31 @@ def execute_query(search_type, search_value, populations=None, page=1, per_page=
             sc.P_value,
             g.Mapped_Gene,
             ph.Phenotype AS Phenotype,
-            p.Population_ID,
-            p.Population_Name AS Population
+           COALESCE(p.Population_ID, 'N/A') AS Population
         FROM SNP sc
         LEFT JOIN Gene g ON sc.Gene_ID = g.Gene_ID
-        LEFT JOIN Population p ON sc.SNP_ID = p.SNP_ID
         LEFT JOIN Phenotype ph ON sc.SNP_ID = ph.SNP_ID
+        LEFT JOIN SNP_Population sp ON sc.SNP_ID = sp.SNP_ID
+        LEFT JOIN Population p ON sp.Population_ID = p.Population_ID
         WHERE {query_map[search_type]}
     """
-
+    
     # Parameters for the query
     params = {"search_value": f"%{search_value}%"}
 
-    # if pop selected, filters them, converts into tuple for better query
+    # if populations selected, filters them, converts into tuple for better query
     if populations:
-        sql_query += " AND p.Population_ID IN :populations"
-        params["populations"] = tuple(populations)
+        placeholders = ",".join([f":pop{i}" for i in range(len(populations))])
+        sql_query += f" AND sp.Population_ID IN ({placeholders})"
+    for i, pop in enumerate(populations):
+        params[f"pop{i}"] = pop
+
+
+    # if phenotypes selected, filters them, converts into tuple for better query
+    if phenotypes:
+        sql_query += f" AND ph.Phenotype IN ({','.join([':ph' + str(i) for i in range(len(phenotypes))])})"
+    for i, ph in enumerate(phenotypes):
+        params[f"ph{i}"] = ph
 
     # This part is ai coded so gotta understand it and change it later, but basically goes the pages
     try:
