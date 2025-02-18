@@ -4,7 +4,6 @@ from sqlalchemy import create_engine, text
 import logging
 import math
 
-#test_check!!!
 
 app = Flask(__name__)
 
@@ -154,6 +153,52 @@ def execute_query(search_type, search_value, populations=None, phenotypes=None, 
     except Exception as e:
         logger.error(f"Error executing query: {e}")
         return 0, []  # Return 0 total results and an empty list
+
+@app.route("/snp/<snp_id>")
+def snp_detail(snp_id):
+    # Fetch SNP details from the database, including statistical data
+    sql_query = """
+        SELECT
+            sc.SNP_ID,
+            sc.RSID,
+            sc.Chromosome,
+            sc.Position,
+            sc.Reference_Allele,
+            sc.Alternate_Allele,
+            sc.P_value,
+            g.Mapped_Gene,
+            ph.Phenotype AS Phenotype,
+            COALESCE(p.Population_ID, 'N/A') AS Population,
+            cs.FST_Score,
+            cs.XPEHH_Score,
+            ss_beb.TajimaD AS TajimaD_BEB,
+            ss_beb.Nucleotide_Diversity AS Nucleotide_Diversity_BEB,
+            ss_beb.Haplotype_Diversity AS Haplotype_Diversity_BEB,
+            ss_pjl.TajimaD AS TajimaD_PJL,
+            ss_pjl.Nucleotide_Diversity AS Nucleotide_Diversity_PJL,
+            ss_pjl.Haplotype_Diversity AS Haplotype_Diversity_PJL
+        FROM SNP sc
+        LEFT JOIN Gene g ON sc.Gene_ID = g.Gene_ID
+        LEFT JOIN Phenotype ph ON sc.SNP_ID = ph.SNP_ID
+        LEFT JOIN SNP_Population sp ON sc.SNP_ID = sp.SNP_ID
+        LEFT JOIN Population p ON sp.Population_ID = p.Population_ID
+        LEFT JOIN Comparative_Statistics cs ON sc.SNP_ID = cs.SNP_ID
+        LEFT JOIN SS_BEB ss_beb ON sc.SNP_ID = ss_beb.SNP_ID
+        LEFT JOIN SS_PJL ss_pjl ON sc.SNP_ID = ss_pjl.SNP_ID
+        WHERE sc.RSID = :snp_id
+    """
+    
+    try:
+        with engine.connect() as conn:
+            results = pd.read_sql(text(sql_query), conn, params={"snp_id": snp_id})
+            if not results.empty:
+                snp_details = results.to_dict(orient='records')[0]
+                return render_template("snp_detail.html", snp=snp_details)
+            else:
+                return render_template("snp_detail.html", snp=None)
+    except Exception as e:
+        logger.error(f"Error fetching SNP details: {e}")
+        return render_template("snp_detail.html", snp=None)
 
 # About route
 @app.route("/about")
