@@ -15,7 +15,7 @@
             <h2>Search Results for "{{ query }}"</h2>
 
             <div class="filter-section">
-                <form action="{{ url_for('search') }}" method="post">
+                <form action="{{ url_for('search') }}" method="get">
                     <input type="hidden" name="query" value="{{ query }}">
                     <input type="hidden" name="filter" value="{{ search_type }}">
                     <p>Apply Population Filters:</p>
@@ -60,7 +60,7 @@
                         </thead>
                         <tbody>
                             {% for snp in results %}
-                            <tr>
+                            <tr onclick="window.location='{{ url_for('snp_detail', snp_id=snp.RSID) }}';" style="cursor: pointer;">
                                 <td>{{ snp.RSID }}</td>
                                 <td>{{ snp.Chromosome }}</td>
                                 <td>{{ snp.Position }}</td>
@@ -79,11 +79,11 @@
                 <!-- Pagination controls -->
                 <div class="pagination">
                     {% if page > 1 %}
-                        <a href="{{ url_for('search', page=page-1, query=query, filter=search_type) }}">Previous</a>
+                        <a href="{{ url_for('search', page=page-1, query=query, filter=search_type, Population=request.args.getlist('Population'), phenotype=request.args.getlist('phenotype')) }}">Previous</a>
                     {% endif %}
                     <span>Page {{ page }} of {{ total_pages }}</span>
                     {% if page < total_pages %}
-                        <a href="{{ url_for('search', page=page+1, query=query, filter=search_type) }}">Next</a>
+                        <a href="{{ url_for('search', page=page+1, query=query, filter=search_type, Population=request.args.getlist('Population'), phenotype=request.args.getlist('phenotype')) }}">Next</a>
                     {% endif %}
                 </div>
 
