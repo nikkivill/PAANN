@@ -38,6 +38,14 @@
                 <label><input type="checkbox" name="Population" value="BEB"> Bengali (BEB)</label>
                 <label><input type="checkbox" name="Population" value="PJL"> Punjabi (PJL)</label>
             </div>
+
+            <!-- Phenotype filters -->
+            <div class="filter-container">
+                <label><input type="checkbox" name="phenotype" value="FGadjBMI"> Fasting Glucose (FGadjBMI)</label>
+                <label><input type="checkbox" name="phenotype" value="HBA1CadjBMI"> HbA1C (HBA1CadjBMI)</label>
+                <label><input type="checkbox" name="phenotype" value="FIadjBMI"> Fasting Insulin (FIadjBMI)</label>
+                <label><input type="checkbox" name="phenotype" value="2hrGadjBMI"> 2-Hour Glucose (2hrGadjBMI)</label>
+            </div>
         </form>
 
         <!-- JavaScript - Change on selection -->
@@ -62,15 +70,6 @@
             document.addEventListener("DOMContentLoaded", updatePlaceholder);
             document.getElementById("filter").addEventListener("change", updatePlaceholder);
         </script>
-
-         <!-- Phenotype filters -->
-         <div class="filter-container">
-            <label><input type="checkbox" name="phenotype_1" value="fasting_glucose"> Fasting Glucose</label>
-            <label><input type="checkbox" name="phenotype_3" value="hba1c"> HbA1C</label>
-            <label><input type="checkbox" name="phenotype_2" value="fasting_insulin"> Fasting Insulin</label>
-            <label><input type="checkbox" name="phenotype_3" value="2_hour_glucose"> 2-Hour Glucose</label>
-        </div>
-
 
         <!-- Navigation Links -->
         <section class="links-section">
@@ -106,5 +105,3 @@
     </footer>
 </body>
 </html>
-
-
