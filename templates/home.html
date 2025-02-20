@@ -1,107 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Home - SNP Browser</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='home_style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='contact_style.css') }}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home - SNP Browser</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='home_style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='contact_style.css') }}">
 </head>
 <body>
-    <header>
-        <h1>PAANN T2D Browser</h1>
-    </header>
-    <main>
-        <section class="intro">
-            <h2>Welcome to the SNP Browser</h2>
-            <p>Search for Type 2 Diabetes genetic variants by RSID, name, or coordinates.</p>
-            <p>Filter queries for ancestry, statistical tests, and preferred units.</p>
-        </section>
+  <header>
+    <h1>PAANN T2D Browser</h1>
+  </header>
+  <main>
+    <section class="intro">
+      <h2>Welcome to the SNP Browser</h2>
+      <p>Search for Type 2 Diabetes genetic variants by RSID, name, or coordinates.</p>
+      <p>Filter queries for ancestry, statistical tests, and preferred units.</p>
+    </section>
 
-        <!-- Search Form -->
-        <form action="{{ url_for('search') }}" method="post" class="search-form">
-            <!-- Search Bar -->
-            <section class="search-container">
-                <div class="search-box">
-                    <select name="filter" id="filter">
-                        <option value="snp_id">SNP ID</option>
-                        <option value="gene">Gene Name</option>
-                        <option value="position">Position</option>
-                        <option value="chromosome">Chromosome</option>
-                    </select>
-                    <input type="text" name="query" id="search" placeholder="Search..." required>
-                    <button type="submit">🔍</button>
+    <!-- Search Form -->
+    <form action="{{ url_for('search') }}" method="post" class="search-form">
+    <div class="search-container">
+      <!-- Dropdown remains static on the left -->
+      <select name="filter" id="filter">
+        <option value="snp_id">RSID</option>
+        <option value="gene">Gene Name</option>
+        <option value="genomic_region">Genomic Region</option>
+      </select>
+      
+      <!-- This container will hold either the text search OR the genomic region fields -->
+      <div id="input-area">
+        <input type="text" name="query" id="search" placeholder="Search..." required>
+      </div>
+      
+      <button type="submit">🔍</button>
+    </div>
+    
+      <!-- Genomic Region Fields -->
+      <div id="genomic-region-fields" class="genomic_region" style="display: none;">
+        <label for="chromosome">Chromosome:</label>
+        <input type="text" id="chromosome" name="chromosome" placeholder="Enter chromosome number (e.g., 1)">
+
+        <label for="start_position">Start Position:</label>
+        <input type="text" id="start_position" name="start_position" placeholder="Enter start position (e.g., 1000000)">
+
+        <label for="end_position">End Position:</label>
+        <input type="text" id="end_position" name="end_position" placeholder="Enter end position (e.g., 2000000)">
+      </div>
+
+      <!-- Population Filter -->
+      <div class="filter-container2">
+        <label>
+          <input type="checkbox" name="Population" value="BEB"> Bengali (BEB)
+        </label>
+        <label>
+          <input type="checkbox" name="Population" value="PJL"> Punjabi (PJL)
+        </label>
+      </div>
+
+      <!-- Phenotype Filters -->
+      <div class="filter-container">
+        <label>
+          <input type="checkbox" name="phenotype" value="FGadjBMI"> Fasting Glucose (FGadjBMI)
+        </label>
+        <label>
+          <input type="checkbox" name="phenotype" value="HBA1CadjBMI"> HbA1C (HBA1CadjBMI)
+        </label>
+        <label>
+          <input type="checkbox" name="phenotype" value="FIadjBMI"> Fasting Insulin (FIadjBMI)
+        </label>
+        <label>
+          <input type="checkbox" name="phenotype" value="2hrGadjBMI"> 2-Hour Glucose (2hrGadjBMI)
+        </label>
+      </div>
+    </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const filterDropdown = document.getElementById("filter");
+          const inputArea = document.getElementById("input-area");
+          const genomicRegionFields = document.getElementById("genomic-region-fields");
+      
+          function updateUI() {
+            if (filterDropdown.value === "genomic_region") {
+              // Replace input-area content with genomic region fields
+              inputArea.innerHTML = `
+                <div>
+                  <label for="chromosome">Chromosome:</label>
+                  <input type="text" id="chromosome" name="chromosome" placeholder="Enter chromosome number (e.g., 1)">
                 </div>
-            </section>
-
-            <!-- Population Filter -->
-            <div class="filter-container2">
-                <label><input type="checkbox" name="Population" value="BEB"> Bengali (BEB)</label>
-                <label><input type="checkbox" name="Population" value="PJL"> Punjabi (PJL)</label>
-            </div>
-
-            <!-- Phenotype filters -->
-            <div class="filter-container">
-                <label><input type="checkbox" name="phenotype" value="FGadjBMI"> Fasting Glucose (FGadjBMI)</label>
-                <label><input type="checkbox" name="phenotype" value="HBA1CadjBMI"> HbA1C (HBA1CadjBMI)</label>
-                <label><input type="checkbox" name="phenotype" value="FIadjBMI"> Fasting Insulin (FIadjBMI)</label>
-                <label><input type="checkbox" name="phenotype" value="2hrGadjBMI"> 2-Hour Glucose (2hrGadjBMI)</label>
-            </div>
-        </form>
-
-        <!-- JavaScript - Change on selection -->
-        <script>
-            function updatePlaceholder() {
-                let searchBox = document.getElementById("search");
-                let filterValue = document.getElementById("filter").value;
-        
-                if (filterValue === "snp_id") {
-                    searchBox.placeholder = "Enter RSID (e.g., rs28737320)";  // Updated placeholder
-                } else if (filterValue === "gene") {
-                    searchBox.placeholder = "Enter Gene Name (e.g., BRCA1)";
-                } else if (filterValue === "position") {
-                    searchBox.placeholder = "Enter position (e.g., chr11:1230000-1240000)";
-                } else if (filterValue === "chromosome") {
-                    searchBox.placeholder = "Enter Chromosome (e.g., 11)";
-                } else {
-                    searchBox.placeholder = "Search for a SNP";
-                }
+                <div>
+                  <label for="start_position">Start Position:</label>
+                  <input type="text" id="start_position" name="start_position" placeholder="Enter start position (e.g., 1000000)">
+                </div>
+                <div>
+                  <label for="end_position">End Position:</label>
+                  <input type="text" id="end_position" name="end_position" placeholder="Enter end position (e.g., 2000000)">
+                </div>
+              `;
+            } else {
+              // Restore the original text search input
+              inputArea.innerHTML = `<input type="text" name="query" id="search" placeholder="Search..." required>`;
             }
-        
-            document.addEventListener("DOMContentLoaded", updatePlaceholder);
-            document.getElementById("filter").addEventListener("change", updatePlaceholder);
-        </script>
+          }
+      
+          filterDropdown.addEventListener("change", updateUI);
+          updateUI();
+        });
+      </script>
+      
+    <!-- Navigation Links -->
+    <section class="links-section">
+        <a href="{{ url_for('about') }}">About</a>
+        <a href="{{ url_for('userguide') }}">User Guide</a>
+        <a href="{{ url_for('contact') }}">Contact Us</a>
+        <a href="{{ url_for('datasources') }}">Data Sources</a>
+    </section>
 
-        <!-- Navigation Links -->
-        <section class="links-section">
-            <a href="{{ url_for('about') }}">About</a>
-            <a href="{{ url_for('userguide') }}">User Guide</a>
-            <a href="{{ url_for('contact') }}">Contact Us</a>
-            <a href="{{ url_for('datasources') }}">Data Sources</a>
-        </section>
+    <!-- Featured SNPs -->
+    <section class="featured-snps">
+        <h2>Featured SNPs</h2>
+        <ul>
+            <li><a href="#">rs28737320</a></li>
+            <li><a href="#">rs860772</a></li>
+            <li><a href="#">rs144598440</a></li>
+        </ul>
+    </section>
 
-        <!-- Featured SNPs -->
-        <section class="featured-snps">
-            <h2>Featured SNPs</h2>
-            <ul>
-                <li><a href="#">rs28737320</a></li>
-                <li><a href="#">rs860772</a></li>
-                <li><a href="#">rs144598440</a></li>
-            </ul>
-        </section>
+    <!-- Search Tips -->
+    <section class="search-tips">
+        <h2>Try Searching:</h2>
+        <p>Example Queries:</p>
+        <ul>
+            <li>rs123456</li>
+            <li>XYZ gene</li>
+            <li>Chromosome 11</li>
+        </ul>
+    </section>
 
-        <!-- Search Tips -->
-        <section class="search-tips">
-            <h2>Try Searching:</h2>
-            <p>Example Queries:</p>
-            <ul>
-                <li>rs123456</li>
-                <li>XYZ gene</li>
-                <li>Chromosome 11</li>
-            </ul>
-        </section>
-    </main>
-    <footer>
-        <p>© 2024 PAANN T2D Browser | <a href="{{ url_for('contact') }}">Contact Us</a></p>
-    </footer>
+    <section class="survey-link">
+      <h2>Give us a Feedback</h2>
+      <a href="{{ url_for('survey') }}" class="survey-button">Take Survey</a>
+  </section>
+  
+  </main>
+
+  <footer>
+    <p>&copy; 2024 PAANN T2D Browser | <a href="{{ url_for('contact') }}">Contact Us</a></p>
+  </footer>
 </body>
 </html>
