@@ -18,13 +18,13 @@ PAANN is a web application that identifies, analyses and interprets **Single Nuc
 4. Run the app.py: python app.py
 5. Enter the engine credentials: username, password, host and database name
 
-##### Usage:
-- Access the app via the link 'http://localhost:5000'
+#### Usage:
+- Access the app via the link e.g. '_http://localhost:5000_'
 - Enter a search value and optionally filter for population/phenotype
 - View results alongside corresponding visualisation of statistics
 - Select SNP of interest for further information
 
-###### Programmes used:
+#### Programmes used:
 - *Database*: MySQL
 - *Backend*: FLASK, Python
 - *Frontend*: HTML, CSS, JAVASCRIPT
