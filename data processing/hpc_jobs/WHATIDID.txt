@@ -1,0 +1,43 @@
+# create directory for all files
+mkdir 05-02-2025_all_chr_pop
+
+# create sub directories
+cd 05-02-2025_all_chr_pop 
+mkdir input tmp final_results
+
+# download all 1000 genomes phase 3 chromosome (1-22) files and their index files in your input directory
+cd input
+wget -c -r -np -nH --cut-dirs=3 -A "ALL.chr*.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz,ALL.chr*.phase3\
+_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz.tbi" ftp://ftp.ncbi.nlm.nih.gov/1000genomes/ftp/release/20130502/  
+
+# download the sample panel 
+wget -c https://ftp.ncbi.nlm.nih.gov/1000genomes/ftp/release/20130502/integrated_call_samples_v3.20130502.ALL.panel
+
+# extract Punjabi and Bengali population samples from sample panel and put into .txt files (change the population ID for your population of choice)
+cd ../tmp 
+awk '$2 == "PJL"'../input/integrated_call_samples_v3.20130502.ALL.panel > PJL_samples.txt
+awk '$2 == "BEB"' ../input/integrated_call_samples_v3.20130502.ALL.panel > BEB_samples.txt 
+
+# extract all biallelic snps for PJL and BEB samples from all chromosomes 1-22
+qsub extract_all_bi_pop.sh 
+
+# filter all BEB and PJL biallelic SNPs using all_rsids.txt file which are all the rsIDs in our processed_association_data.csv 
+qsub final_rsids_filter.sh
+
+# ensure both output population files have the same number of SNPs
+cd ../final_results
+zgrep -v "^#" final_BEB_all_filtered_snps.vcf.gz | wc -l
+zgrep -v "^#" final_PJL_all_filtered_snps.vcf.gz | wc -l
+
+# ensure both output population files have the exact same SNPs
+zgrep -v "^#" final_BEB_all_filtered_snps.vcf.gz | cut -f 3 | sort > final_BEB_snps.txt
+zgrep -v "^#" final_PJL_all_filtered_snps.vcf.gz | cut -f 3 | sort > final_PJL_snps.txt
+
+# if no output, then it contains all the same SNPs
+diff final_BEB_snps.txt final_PJL_snps.txt
+
+# find rsIDs which appear in PJL and BEB but not in the all_rsids.txt file – these are the missing SNPs
+# remove from processed_association_data.csv 
+comm -23 <(sort ../tmp/all_rsids.txt) <(sort <(zgrep -v "^#" final_BEB_all_filtered_snps.vcf.gz | cut -f 3) <(zgrep -v "^#" final_PJL_all_filtered_snps.vcf.gz\
+| cut -f 3)) > final_missing_rsids.txt
+ 
