@@ -13,10 +13,12 @@ SELECT
 	) AS P_value,  -- changes the notation of the p-value so that are written in scientific notation with 2 decimal places
 	SNP_Information.Ancestry,
 	Statistics.Population_ID,
-	Statistics.Tajima_D,
-	Statistics.Haplotype_Diversity,
-	Statistics.Nucleotide_Diversity
+	Comparative_Statistics.Tajima_D,
+	Comparative_Statistics.Haplotype_Diversity,
+	Comparative_Statistics.Nucleotide_Diversity
 FROM 
 	SNP_Information
 LEFT JOIN 
 	Statistics ON SNP_Information.SNP_ID = Statistics.SNP_ID
+LEFT JOIN 
+	Comparative_Statistics ON SNP_Information.SNP_ID = Comparative_Statistics.SNP_ID
