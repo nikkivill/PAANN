@@ -12,11 +12,12 @@ PAANN is a web application that identifies, analyses and interprets **Single Nuc
 - Download data as a text file with SNP information and statistics
   
 #### Installation:
-1. Clone the git repository: ***{insert link to git repository}***
+1. Clone the git repository: https://github.com/nikkivill/PAANN.git
 2. Install dependencies (found as requirments.text): pip install -r requirements.txt
-3. Download the dump.sql into SQL workbench: e.g. mysql -u username -p database_name < dump.sql
-4. Run the app.py: python app.py
-5. Enter the engine credentials: username, password, host and database name
+3. Download the dump.sql: e.g. mysql -u username -p database_name < dump.sql
+4. Create a new schema in MySQL, import the dump.sql and execute the query to populate the database
+5. Run the app.py: python app.py
+6. Enter the engine credentials: username, password, host and database name
 
 #### Usage:
 - Access the app via the link e.g. '_http://localhost:5000_'
