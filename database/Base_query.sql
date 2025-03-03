@@ -6,10 +6,8 @@ SELECT
     s.Reference_Allele,
     s.Alternate_Allele,
     CONCAT(
-        ROUND(si.P_value / POW(10, FLOOR(LOG10(si.P_value))), 2),
-        'e',
-        FLOOR(LOG10(si.P_value))
-    ) AS P_value,
+        ROUND(s.P_value / POW(10, FLOOR(LOG10(si.P_value))), 2),'e', FLOOR(LOG10(s.P_value))
+	) AS P_value,
     s.Mapped_genes,  
     s.Phenotype,
     COALESCE(st.Population_ID, 'N/A') AS Population,
