@@ -1,19 +1,21 @@
 # PAANN
 
 ## Description: 
-PAANN is a web application that identifies, analyses and interprets **Single Nucleotide Polymorphisms (SNPs)** tlinked to **Type 2 Diabetes (T2D)**. Specfically, it focuses on SNPs that exhibit **positive selection for South Asian populations**.
+PAANN is a web application for browsing single nucleotide polymorphisms (SNPs) associated with Type-2 Diabetes (T2D) and related phenotypes. 
 
 ### Features:
-- Retrieve SNP information by rsID, genomic positions or mapped gene(s)
-- Provides summary statistics of SNPs in the database
-- Generates visualisation plots of the statistics to represent positive selection
-- Mapped genes linked to external API to provide KEGG fucntional annotation/ENSEMBL gene page
+- Retrieve SNP information by rsID, genomic positions or mapped gene
 - Allows for filtering by population or phenotype
-- Download data as a text file with SNP information and statistics
+- Provides SNP association data information (reference and alternate alleles, mapped gene(s) (if any), phenotype, p-value, ancestry)
+- Mapped genes are linked to external websites to provide functional information (PAN-GO/Ensembl GRCh37) 
+- Provides summary statistics of positive selection for SNPs 
+- Generates interactive graph visualizations of the summary statistics
+- Download data as a .txt file with SNP information and summary statistics values
+- Download summary statistics graphs as .png files
   
 #### Installation:
 1. Clone the git repository: https://github.com/nikkivill/PAANN.git
-2. Install dependencies (found as requirments.text): pip install -r requirements.txt
+2. Install dependencies (found as requirements.text): pip install -r requirements.txt
 3. Download the dump.sql: e.g. mysql -u username -p database_name < dump.sql
 4. Create a new schema in MySQL, import the dump.sql and execute the query to populate the database
 5. Run the app.py: python app.py
