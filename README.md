@@ -16,10 +16,12 @@ PAANN is a web application for browsing single nucleotide polymorphisms (SNPs) a
 #### Installation:
 1. Clone the git repository: https://github.com/nikkivill/PAANN.git
 2. Install dependencies (found as requirements.text): pip install -r requirements.txt
-3. Download the dump.sql: e.g. mysql -u username -p database_name < dump.sql
-4. Create a new schema in MySQL, import the dump.sql and execute the query to populate the database
-5. Run the app.py: python app.py
-6. Enter the engine credentials: username, password, host and database name
+3. Download the dump.sql: git directory PAANN/database 
+4. Connect to MySQL to create an empty schema: e.g. myysql -u username -p
+5. Initialise an empty schema and exit the SQL command-line: e.g. CREATE DATABASE PAANN; exit;
+6. Insert dump.sql into empty schema: e.g. mysqldump -u username -p PAANN < dump.sql
+7. Run the app.py: python app.py
+8. Enter the engine credentials: username, password, host and database name
 
 #### Usage:
 - Access the app via the link e.g. '_http://localhost:5000_'
