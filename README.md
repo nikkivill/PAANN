@@ -8,7 +8,7 @@ PAANN is a web application for browsing single nucleotide polymorphisms (SNPs) a
 - Allows for filtering by population or phenotype
 - Provides SNP association data information (reference and alternate alleles, mapped gene(s) (if any), phenotype, p-value, ancestry)
 - Mapped genes are linked to external websites to provide functional information (PAN-GO/Ensembl GRCh37) 
-- Provides summary statistics of positive selection for SNPs 
+- Provides population-specific summary statistics of positive selection for SNPs 
 - Generates interactive graph visualizations of the summary statistics
 - Download data as a .txt file with SNP information and summary statistics values
 - Download summary statistics graphs as .png files
