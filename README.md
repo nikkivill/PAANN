@@ -2,7 +2,7 @@
 
 ## Description: 
 PAANN is a web application for browsing single nucleotide polymorphisms (SNPs) associated with Type-2 Diabetes (T2D) and related phenotypes. 
-It provides positive selection statistics for each SNP for Bengali, from Bangladesh and Punjabi from Lahore, Pakistan populations.
+It also provides positive selection statistics for each SNP for Bengali, from Bangladesh and Punjabi from Lahore, Pakistan populations.
 
 ### Features:
 - Retrieve SNP information by rsID, genomic positions or mapped gene
