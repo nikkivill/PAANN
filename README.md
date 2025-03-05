@@ -17,7 +17,6 @@ It also provides positive selection statistics for each SNP for Bengali, from Ba
 #### Installation:
 1. Clone the git repository: git clone https://github.com/nikkivill/PAANN.git
 2. Install dependencies (found as requirements.text): pip install -r requirements.txt
-3. Download the dump.sql: git directory PAANN/database 
 4. Connect to MySQL command-line: e.g. mysql -u username -p
 5. Initialise an empty schema and exit the SQL command-line: e.g. CREATE DATABASE PAANN; exit;
 6. Insert dump.sql into empty schema: e.g. mysqldump -u username -p PAANN < databse/dump.sql
