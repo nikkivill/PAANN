@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Sources - SNP Browser</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='datasources_style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>PAANN T2D Browser - Data Sources</h1>
+    </header>
+    <main>
+
+        <section class="links-section">
+            <a href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('userguide') }}">User Guide</a>
+            <a href="{{ url_for('contact') }}">Contact Us</a>
+            <a href="{{ url_for('home') }}">Home</a>
+        </section>
+        
+        <section class="intro">
+            <h2>Data Sources</h2>
+            <p>Explore the data sources used to identify Type 2 Diabetes (T2D) genetic variants.</p>
+        </section>
+
+        <section class="datasources">
+            <h3>Our Key Data Sources</h3>
+            <ul>
+                <li><strong><a href="https://www.internationalgenome.org/data-portal/data-collection/phase-3" target="_blank">SNP Data from 1000 Genomes:</a></strong> We downloaded VCF files containing bi-allelic SNP data for Punjabis from Lahore (PJL) and Bengalis (BEB) from the 1000 Genomes Project.</li>
+                <li><strong><a href="https://t2d.hugeamp.org/" target="_blank">T2D KP:</a></strong> Using the Type 2 Diabetes Knowledge Portal, we obtained a list of SNPs linked to T2D-related phenotypes and filtered the VCF files accordingly.</li>
+                <li><strong>Scientific Literature:</strong> Peer-reviewed studies provided supporting evidence for genetic associations, helping us interpret GWAS findings in the context of T2D <a href="https://www.nature.com/articles/s41588-021-00852-9" target="_blank">[1]</a>, <a href="https://www.nature.com/articles/s42003-022-03248-5" target="_blank">[2]</a>, <a href="https://www.nature.com/articles/s41588-018-0241-6" target="_blank">[3]</a>.</li>
+                <li><strong><a href="https://www.genome.jp/kegg/" target="_blank">PAN-GO Database:</a></strong>We used PAN-GO for our gene ontology database, which categorises genes based on molecular function, biological process, and cellular component.</li>
+                <li><strong><a href="https://www.ensembl.org/index.html" target="_blank">Ensembl:</a></strong> When PAN-GO did not have gene ontology terms for certain genes, we used Ensembl to obtain alternative gene data, ensuring comprehensive annotation of genetic variants.</li>
+            </ul>
+        </section>
+        
+
+    </main>
+    <footer>
+        <p>© 2024 PAANN T2D Browser | <a href="{{ url_for('contact') }}">Contact Us</a></p>
+    </footer>
+</body>
+</html>
