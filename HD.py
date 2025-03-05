@@ -1,11 +1,10 @@
-## note: match population is ai coded, basically checks file begin name, extracts as pop and puts it in pop column later for sql stuff
 import csv
 from collections import Counter
 import gzip
 import re
 
 def calculate_haplotype_frequencies(vcf_file_path):
-    match = re.search(r'([A-Z]+)_all_filtered_snps', vcf_file_path)
+    match = re.search(r'([A-Z]+)_all_filtered_snps', vcf_file_path) #checks name of file VCF
     population = match.group(1) if match else "Unknown"
     
     output_csv_path = f"{population}_haplotype_frequencies_and_diversity.csv"
