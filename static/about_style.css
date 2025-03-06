@@ -1,0 +1,127 @@
+body {
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: rgb(8, 40, 8);
+    text-align: center;
+}
+
+header {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 4px solid #5ad45e;
+}
+
+h1, h2 {
+    color: #56d35a;
+    font-style: italic;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+main {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+/* URL Links */
+.links-section {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.links-section a {
+    text-decoration: none;
+    color: #56d35a;
+    background-color: transparent;
+    border: 2px solid #56d35a;
+    padding: 10px 15px;
+    border-radius: 20px;
+    transition: all 0.3s;
+}
+
+.links-section a:hover {
+    background-color: #56d35a;
+    color: white;
+}
+
+/* Content sections */
+.about-content, .features, .mission, .motivations {
+    margin-bottom: 20px;
+    text-align: left;
+    padding: 15px;
+    border-left: 5px solid #56d35a;
+    background: rgba(230, 249, 231, 0.9);
+    border-radius: 5px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background: #56d35a;
+    color: white;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+/* Image */
+.about-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+/* Footer */
+footer {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    margin-top: 20px;
+    text-align: center;
+    border-top: 3px solid #56d35a;
+}
+
+footer a {
+    color: #56d35a;
+    text-decoration: underline;
+}
+
+/* SNP Box */
+.snp-box {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 20px;
+    background: #40a544;
+    color: white;
+    border-radius: 10px;
+    width: 300px;
+    margin: 20px auto;
+}
+
+
+
+.mission a {
+    text-decoration: none;
+    color: #2b7a2f;
+    font-weight: bold;
+  }
+  
+  .mission a:hover {
+    color: #1f5a24;
+  }

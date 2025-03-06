@@ -1,0 +1,132 @@
+/* General Styles */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(135deg, #f9f9f9, #e0e0e0);
+}
+
+/* Header */
+header {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 15px 0;
+  text-align: center;
+  border-bottom: 4px solid #56d35a;
+}
+
+h1 {
+  color: #56d35a;
+  font-style: italic;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  margin: 0;
+  font-size: 2.5em;
+}
+
+/* Main Content */
+main {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Back to Home Button */
+.back-home {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.back-home a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #56d35a;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+  font-size: 1.2em;
+}
+
+.back-home a:hover {
+  background-color: #45a049;
+}
+
+/* SNP Details Container */
+.snp-detail-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+/* Card Styling */
+.card {
+  width: 100%;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+}
+
+.card h3 {
+  margin-top: 0;
+  font-size: 1.5em;
+  color: #333;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #56d35a;
+  padding-bottom: 10px;
+}
+
+.card ul, .population-stats ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.card ul li, .population-stats ul li {
+  font-size: 1.1em;
+  margin-bottom: 8px;
+}
+
+.card ul li strong, .population-stats ul li strong {
+  color: #333;
+}
+
+.card a {
+  color: #56d35a;
+  text-decoration: none;
+}
+
+.card a:hover {
+  text-decoration: underline;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  margin-top: 40px;
+}
+
+footer a {
+  color: #56d35a;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .snp-detail-container {
+    flex-direction: column;
+  }
+}
