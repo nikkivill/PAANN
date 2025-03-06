@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Researcher Feedback</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='survey_style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .tooltip {
+            font-size: 12px;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>We Value Your Feedback!</h2>
+        <p>Share your thoughts on using our tool to explore Type 2 Diabetes (T2D) across different populations! </p>
+        <form id="feedback-form" action="/feedback" method="POST">
+            
+            <label for="phenotypes">Are there any additional health markers or phenotypes you'd like us to track for T2D?</label>
+            <textarea name="phenotypes" id="phenotypes" rows="4" required placeholder=""></textarea>
+
+            <label for="snps">Are there any specific populations or ethnic groups that should be included in the analysis to improve genetic risk predictions?</label>
+            <textarea name="snps" id="snps" rows="4" placeholder=""></textarea>
+
+            <label for="improvements">Do you have any suggestions on how we can improve the app?</label>
+            <textarea name="improvements" id="improvements" rows="4" required placeholder=""></textarea>
+
+            <label for="satisfaction">How would you rate your satisfaction with the current app features?</label>
+            <select name="satisfaction" id="satisfaction" required>
+                <option value="very_satisfied">Very Satisfied</option>
+                <option value="satisfied">Satisfied</option>
+                <option value="neutral">Neutral</option>
+                <option value="unsatisfied">Unsatisfied</option>
+                <option value="very_unsatisfied">Very Unsatisfied</option>
+            </select>
+
+            <button type="submit">Submit Feedback</button>
+        </form>
+
+        <div id="feedback-result" class="result"></div>
+
+    </div>
+<!-- Add JavaScript code to handle form submission and display the result also understand the code below as its AI -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('feedback-form');
+            const resultDiv = document.getElementById('feedback-result');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch('/feedback', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                const data = await response.json();
+                resultDiv.innerHTML = `<p>Thank you for your feedback!</p>`;
+                form.reset();
+            } catch (error) {
+                resultDiv.innerHTML = `<p>There was an error submitting your feedback. Please try again.</p>`;
+            }
+        });
+    });
+</script>
+ 
+</body>
+</html>

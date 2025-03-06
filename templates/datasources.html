@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Sources - SNP Browser</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='datasources_style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>PAANN T2D Browser - Data Sources</h1>
+    </header>
+    <main>
+
+        <section class="links-section">
+            <a href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('userguide') }}">User Guide</a>
+            <a href="{{ url_for('contact') }}">Contact Us</a>
+            <a href="{{ url_for('home') }}">Home</a>
+        </section>
+        
+        <section class="intro">
+            <h2>Data Sources</h2>
+            <p>Explore the data sources used to identify Type 2 Diabetes (T2D) genetic variants.</p>
+        </section>
+
+        <section class="datasources">
+            <h3>Our Key Data Sources</h3>
+            <ul>
+                <li><strong><a href="https://www.internationalgenome.org/data-portal/data-collection/phase-3" target="_blank">1000 Genomes Project:</a></strong> We downloaded Phase 3 variant VCF files from the 1000 Genomes Project. Genomic data for Punjabi from Lahore, Pakistan and Bengali from Bangladesh populations were extracted for calculating positive selection statistics.</li>
+                <li><strong><a href="https://t2d.hugeamp.org/" target="_blank">T2D KP:</a></strong> Using the Type 2 Diabetes (T2D) Knowledge Portal, we obtained genetic association data for T2D and T2D-related phenotypes.</li>
+                <li><strong>Scientific Literature:</strong> The research papers that accompany our genetic association data. <a href="https://www.nature.com/articles/s41588-021-00852-9" target="_blank">[1]</a>, <a href="https://www.nature.com/articles/s42003-022-03248-5" target="_blank">[2]</a>, <a href="https://www.nature.com/articles/s41588-018-0241-6" target="_blank">[3]</a>.</li>
+                <li><strong><a href="https://functionome.geneontology.org/" target="_blank">PAN-GO Database:</a></strong>We used PAN-GO to provide gene functional information in the form of Gene Ontology (GO) terms. </li>
+                <li><strong><a href="https://www.ensembl.org/index.html" target="_blank">Ensembl GRCh37:</a></strong> If genes were not found in PAN-GO, Ensembl GRCh37 was used as a fallback for obtaining gene functional information.</li>
+            </ul>
+        </section>
+        
+
+    </main>
+    <footer>
+        <p>© 2024 PAANN T2D Browser | <a href="{{ url_for('contact') }}">Contact Us</a></p>
+    </footer>
+</body>
+</html>
