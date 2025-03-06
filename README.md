@@ -11,7 +11,7 @@ It also provides positive selection statistics for each SNP for Bengali, from Ba
 - Mapped genes are linked to external websites to provide functional information (PAN-GO/Ensembl GRCh37) 
 - Provides population-specific summary statistics of positive selection for SNPs 
 - Generates interactive graph visualizations of the summary statistics
-- Download data as a .txt file with SNP information and summary statistics values
+- Download data as a .txt file with SNP information, summary statistics, average and standard deviations
 - Download summary statistics graphs as .png files
   
 #### Installation:
