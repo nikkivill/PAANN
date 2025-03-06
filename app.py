@@ -533,6 +533,6 @@ def survey():
 
 if __name__ == "__main__":
     if engine:
-        app.run(debug=True)
+        app.run(debug=False)
     else:
         logger.error("Failed to initialise database engine. Exiting.")
